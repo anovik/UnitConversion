@@ -1,25 +1,30 @@
-﻿[![Build status](https://ci.appveyor.com/api/projects/status/9oix5m8lgqybda72?svg=true)](https://ci.appveyor.com/project/Stratajet/unit-conversion)
-[![NuGet](https://img.shields.io/nuget/v/UnitConversion.svg)](https://www.nuget.org/packages/UnitConversion)
-[![MIT License](https://img.shields.io/github/license/Stratajet/UnitConversion.svg)](https://raw.githubusercontent.com/Stratajet/UnitConversion/master/LICENSE)
+﻿# Unit Conversion
 
-### Unit Conversion
+[![Build status](https://ci.appveyor.com/api/projects/status/wpwan2vbma0i6ohr?svg=true)](https://ci.appveyor.com/project/gkampolis/unitconversion)
+[![NuGet](https://img.shields.io/nuget/v/UnitConversion.svg)](https://www.nuget.org/packages/UnitConversion)
+[![MIT License](https://img.shields.io/github/license/gkampolis/UnitConversion.svg)](https://raw.githubusercontent.com/gkampolis/UnitConversion/master/LICENSE.md)
+[![Gitter chat](https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg)](https://gitter.im/UnitConversionCSharp)
 
 An expansible .Net class library with support for all modern platforms
+
 * .Net Framework 4.0+
 * .Net Standard 1.3+ (.Net 4.5.1+ and .Net Core)
 
 UnitConversion is designed to be expansible through factories or through concrete converter implementations.
 
 Implementations are currently limited, but include:
-* [MassConverter](https://github.com/Stratajet/UnitConversion/blob/master/UnitConversion/MassConverter.cs)
-* [DistanceConverter](https://github.com/Stratajet/UnitConversion/blob/master/UnitConversion/DistanceConverter.cs)
-* [TimeConverter](https://github.com/Stratajet/UnitConversion/blob/master/UnitConversion/TimeConverter.cs)
-* [AreaConverter](https://github.com/Stratajet/UnitConversion/blob/master/UnitConversion/AreaConverter.cs)
 
-Pull requests with custom implementations are welcome!
+* [MassConverter](https://github.com/gkampolis/UnitConversion/blob/master/UnitConversion/MassConverter.cs)
+* [DistanceConverter](https://github.com/gkampolis/UnitConversion/blob/master/UnitConversion/DistanceConverter.cs)
+* [TimeConverter](https://github.com/gkampolis/UnitConversion/blob/master/UnitConversion/TimeConverter.cs)
+* [AreaConverter](https://github.com/gkampolis/UnitConversion/blob/master/UnitConversion/AreaConverter.cs)
+* [VolumeConverter](https://github.com/gkampolis/UnitConversion/blob/master/UnitConversion/VolumeConverter.cs)
 
-***
-##### Example
+Pull requests with custom implementations are welcome! Please have a look through the [contributing guidelines](https://github.com/gkampolis/UnitConversion/blob/master/.github/CONTRIBUTING.md) and our [code of conduct](https://github.com/gkampolis/UnitConversion/blob/master/.github/CODE_OF_CONDUCT.md).
+
+Note however that at the moment the maintainers are re-organizing a significant portion of the codebase, with the aim of propagating the same coding conventions throughout the entirety of the project. It is estimated that this should be complete by the end of February 2018.
+
+## Example
 
 ```C#
 double kgValue;
@@ -39,7 +44,7 @@ Console.WriteLine("Converted back: " + kgValue);
 lbValue = kgToLbs.LeftToRight(kgValue, 2);
 Console.WriteLine("452kg in pounds (to 2 decimal places) is " + lbValue);
 
-// You can easily customise converters to support Synonyms used in 
+// You can easily customise converters to support Synonyms used in
 // business logic, such as those stored on a database
 kgToLbs.AddSynonym("kg", "MTOW (KG)");
 
@@ -56,11 +61,13 @@ var chucks = kgToLbs.LeftToRight(kgValue);
 Console.WriteLine("7kg is equal to " + lbValue + " chucks");
 ```
 
-****
-##### Converters are easy to define and contribute to
+## Converters are easy to define and contribute to:
+
 ```C#
-public class DistanceConverter : BaseUnitConverter {
-    UnitFactors units = new UnitFactors("m") {
+public class DistanceConverter : BaseUnitConverter 
+{
+    UnitFactors units = new UnitFactors("m") 
+    {
         { new UnitFactorSynonyms("m", "metre"), 1 },
         { new UnitFactorSynonyms("km", "kilometre"), 0.001 },
         { new UnitFactorSynonyms("cm", "centimetre"), 100 },
@@ -71,11 +78,21 @@ public class DistanceConverter : BaseUnitConverter {
         { new UnitFactorSynonyms("in", "inch"), 5000d / 127 },
     };
 
-    public DistanceConverter(string leftUnit, string rightUnit) {
+    public DistanceConverter(string leftUnit, string rightUnit) 
+    {
         Instantiate(units, leftUnit, rightUnit);
     }
-    public DistanceConverter() {
+    public DistanceConverter() 
+    {
         Instantiate(units);
     }
 }
 ```
+
+## Current Maintainers
+
+* [@gkampolis](https://github.com/gkampolis)
+
+### Previous maintainers
+
+Many thanks to the original maintainer [@Nick-Lucas](https://github.com/Nick-Lucas) for all his hard work.
